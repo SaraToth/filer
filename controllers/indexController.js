@@ -7,7 +7,7 @@ const getLandingPage = (req, res) => {
 };
 
 const getDashboard = (req, res) => {
-    return res.render("dashboard");
+    return res.render("dashboard", {user: req.user});
 };
 
 module.exports = { getLandingPage, getDashboard };
