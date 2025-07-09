@@ -88,16 +88,17 @@ const postLogin = [
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.send("some errors exist with login validation.");
-            //return res.status(400).render(login view, { errors: errors.array(), data: req.body});
+            return res.status(400).render("login", { errors: errors.array(), data: req.body});
         }
         next();
     }),
     
-    passport.authenticate("local", {
-        successRedirect: "/dashboard",
-        failureRedirect: "/"
-    }),
+    (req, res) => {
+        passport.authenticate("local", {
+            successRedirect: "/dashboard",
+            failureRedirect: "/user/login?error=true"
+        }) (req, res);
+    },
 ];
 
 const postSignup = [
@@ -108,7 +109,6 @@ const postSignup = [
         if (!errors.isEmpty()) {
             return res.status(400).render("signup", { errors: errors.array(), data: req.body});
         }
-        console.log("Signup has no errors");
         const { firstName, lastName, email, password } = req.body; // comes from signup form data
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -126,8 +126,6 @@ const postSignup = [
                 },
             },
         })
-
-        console.log(firstName);
         
         res.redirect("/user/login");
     }),
