@@ -16,8 +16,8 @@ datasource db {
 
 model User {
   id  Int @id @default(autoincrement())
-  first_name String
-  last_name String
+  firstName String @map("first_name")
+  lastName String @map("last_name")
   email String @unique
   password String
   folders Folder[]
@@ -26,18 +26,18 @@ model User {
 
 model Folder {
   id Int @id @default(autoincrement())
-  folder_name String
-  user User @relation(fields: [user_id], references: [id])
-  user_id Int
+  folderName String
+  user User @relation(fields: [userId], references: [id])
+  userId Int @map("user_id")
   files File[]
 }
 
 model File {
   id Int @id @default(autoincrement())
-  user User @relation(fields: [user_id], references: [id])
-  user_id Int
-  folder Folder @relation(fields: [folder_id], references: [id])
-  folder_id Int
+  user User @relation(fields: [userId], references: [id])
+  userId Int @map("user_id")
+  folder Folder @relation(fields: [folderId], references: [id])
+  folderId Int @map("folder_id")
   link String
-  createdAt DateTime @default(now())
+  createdAt DateTime @default(now()) @map("created_at")
 }
