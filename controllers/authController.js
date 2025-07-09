@@ -106,11 +106,10 @@ const postSignup = [
     asyncHandler(async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.send("some errors exist with sign up validation");
-            // return res.status(400).render(sign up view, { errors: errors.array(), data: req.body});
+            return res.status(400).render("signup", { errors: errors.array(), data: req.body});
         }
-
-        const { firstName, lastName, email, password, confirmPassword } = req.body; // comes from signup form data
+        console.log("Signup has no errors");
+        const { firstName, lastName, email, password } = req.body; // comes from signup form data
         const hashedPassword = await bcrypt.hash(password, 10);
 
 
@@ -127,8 +126,10 @@ const postSignup = [
                 },
             },
         })
+
+        console.log(firstName);
         
-        res.redirect("/login");
+        res.redirect("/user/login");
     }),
 ];
 
