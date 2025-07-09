@@ -75,13 +75,11 @@ const validateLogin = [
 ];
 
 const getLogin = (req, res) => {
-    res.send("This will load the login page");
-    // return res.render(login view);
+    return res.render("login");
 };
 
 const getSignup = (req, res) => {
-    res.send("This will load the signup page");
-    // return res.render(signup view);
+    return res.render("signup");
 };
 
 const postLogin = [
