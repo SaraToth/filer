@@ -30,5 +30,26 @@ const getDashboard = async (req, res) => {
     return res.render("dashboard", {user: req.user, folders, files});
 };
 
+const getDashboardFolder = async (req, res) => {
+    const userId = req.user?.id;
+    const folderId = parseInt(req.params.folderId);
 
-module.exports = { getLandingPage, getDashboard };
+    // Need to get all the folders
+    const folders = await prisma.folder.findMany({
+        where: {
+            userId: userId
+        },
+    });
+
+    // need to get all the files
+    const files = await prisma.file.findMany({
+        where: {
+            userId: userId,
+            folder: {
+                id: folderId,
+            },
+        },
+    });
+    return res.render("dashboard", {user: req.user, folders, files});
+}
+module.exports = { getLandingPage, getDashboard, getDashboardFolder };

@@ -6,7 +6,7 @@
     <ul>
         <% if (locals.folders) {%>
             <% folders.forEach((folder) => {%>
-                <li><%=folder.folderName%></li>
+                <li><a href="/dashboard/folder/<%=folder.id%>"><%=folder.folderName%></a></li>
             <%})%>
         <%}%>
     </ul>
