@@ -4,12 +4,15 @@ require("dotenv").config();
 const path = require("node:path");
 const indexRouter = require("./routes/indexRouter");
 const authRouter = require("./routes/authRouter");
+const folderRouter = require("./routes/folderRouter");
 const assetsPath = path.join(__dirname, "public");
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.static(assetsPath));
+app.use(express.urlencoded({ extended: false}));
 
+app.use("/folders", folderRouter);
 app.use("/user", authRouter);
 app.use("/", indexRouter);
 
