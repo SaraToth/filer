@@ -1,7 +1,9 @@
 const isAuthorized = (req, res, next) => {
-    console.log("We checked if they are admin.");
-    console.log("This function does nothing so far though");
-    next();
+    if (req.isAuthenticated()) {
+        next();
+    } else {
+        res.redirect("/login");
+    }
 }
 
 module.exports = isAuthorized;
