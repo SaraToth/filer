@@ -1,0 +1,13 @@
+<section style="border: 1px solid black;">
+    <ul>
+        <li>New</li>
+    </ul>
+    <h2>Folders</h2>
+    <ul>
+        <% if (locals.folders) {%>
+            <% folders.forEach((folder) => {%>
+                <li><%=folder.folderName%></li>
+            <%})%>
+        <%}%>
+    </ul>
+</section>

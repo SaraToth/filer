@@ -1,1 +1,12 @@
-<h2>This is where we will have our list of files for that folder</h2>
+<main style="border: 1px solid black;">
+    <h2>My Files</h2>
+    <p>Files listed here</p>
+    <ul>
+        <% if (locals.files) {%> 
+            <% files.forEach((file) => {%>
+                <li><%=file.link%></li>
+            <%})%>
+        <%}%>
+    </ul>
+
+</main>
