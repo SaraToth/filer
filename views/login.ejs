@@ -6,6 +6,21 @@
     <title>Login</title>
 </head>
 <body>
-    <h1>Login to Filer</h1>
+    <section>
+        <a href="/">Filer</a>
+        <h1>Login to Filer</h1>
+        <%- include("partials/errors")%>
+        <form action="/user/login" method="post">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <span>Not a member? <a href="/user/signup">Sign up</a></span>
+            <button type="submit">Login</button>
+        </form>
+    </section>
+    
 </body>
 </html>
