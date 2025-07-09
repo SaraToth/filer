@@ -6,6 +6,30 @@
     <title>Sign up</title>
 </head>
 <body>
-    <h1>Sign up for Filer</h1>
+    <section>
+        <a href="/">Filer</a>
+        <h1>Sign up for Filer</h1>
+        <%- include("partials/errors")%>
+        <form action="/user/signup" method="post">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+            <span>Already a member? <a href="/user/login">Login</a></span>
+            <button type="submit">Sign up</button>
+        </form>
+    </section>
+
 </body>
 </html>
