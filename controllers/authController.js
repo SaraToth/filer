@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const prisma = require("../prisma/client");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
+const passport = require("passport");
 
 const toProperNoun = (rawName) => {
     return rawName
@@ -52,6 +53,27 @@ const validateSignup = [
         }),
 ];
 
+const validateLogin = [
+    body("email")
+        .trim()
+        .normalizeEmail()
+        .isEmail().withMessage("Must provide a valid email address.")
+        .custom(async (email) => {
+            const user = await prisma.user.findUnique({
+                where: {
+                    email: email
+                },
+            });
+            if (!user) {
+                throw new Error("There is no account associated with that email address.");
+            }
+            return true;
+        }),
+    body("password")
+        .trim()
+        .notEmpty().withMessage("Must enter a password"),
+];
+
 const getLogin = (req, res) => {
     res.send("This will load the login page");
 };
@@ -60,10 +82,23 @@ const getSignup = (req, res) => {
     res.send("This will load the signup page");
 };
 
-const postLogin = (req, res) => {
-    const { email, password } = req.body; // comes from login form data
-    res.send("This will post the login");
-};
+const postLogin = [
+    validateLogin,
+
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.send("some errors exist with login validation.");
+            //return res.status(400).render(login view, { errors: errors.array(), data: req.body});
+        }
+        next();
+    }),
+    
+    passport.authenticate("local", {
+        successRedirect: "/dashboard",
+        failureRedirect: "/"
+    }),
+];
 
 const postSignup = [
     validateSignup,
@@ -71,7 +106,7 @@ const postSignup = [
     asyncHandler(async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.send("some errors exist with validation");
+            return res.send("some errors exist with sign up validation");
             // return res.status(400).render(sign up view, { errors: errors.array(), data: req.body});
         }
 
