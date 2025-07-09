@@ -14,10 +14,11 @@ passport.use(
             if (!user) {
                 return done(null, false, { message: "Incorrect email"});
             }
-        
-            if (user.password !== password) {
+
+            const match = await bcrypt.compare(password, user.password);
+            if (!match) {
                 return done(null, false, { message: "Incorrect password" });
-            };
+            }
 
             return done(null, user);
         } catch(err) {
