@@ -12,6 +12,7 @@ const fileRouter = require("./routes/fileRouter");
 const assetsPath = path.join(__dirname, "public");
 const postToPatchOverride = require("./middleware/postToPatchOverride");
 const passport = require("passport");
+require("./config/passport");
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -40,13 +41,16 @@ app.use(
       )
    })
 )
+app.use(passport.initialize());
 app.use(passport.session());
 
+// Routes
 app.use("/files", fileRouter);
 app.use("/folders", folderRouter);
 app.use("/user", authRouter);
 app.use("/", indexRouter);
 
+// Error Handler
 app.use((err, req, res, next) => {
    console.error(err);
    res.status(500).send(err);
