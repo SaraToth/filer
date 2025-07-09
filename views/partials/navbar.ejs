@@ -1,7 +1,12 @@
 <nav>
     <ul>
-        <li>Filer</li>
-        <li>Login</li>
-        <li>Sign up</li>
+        <% if (!locals.user) {%>
+            <li><a href="/">Filer</a></li>
+            <li><a href="/user/login">Login</a></li>
+            <li><a href="/user/signup">Sign up</a></li>
+        <% } else {%>
+            <li><a href="/">Filer</a></li>
+            <li><a href="/user/logout">Logout</a></li>
+        <%} %>
     </ul>
 </nav>
