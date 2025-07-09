@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const prisma = require("../prisma/client");
 const { body, validationResult } = require("express-validator");
+const { use } = require("passport");
 
 const validateFolder = [
     body("folderName")
@@ -80,9 +81,40 @@ const deleteFolder = asyncHandler(async (req, res) => {
     res.redirect("/dashboard");
 });
 
-const patchFolder = (req, res) => {
-    const { folderId } = req.params;
-    res.send("This will update folder name");
-};
+const patchFolder = [
+    validateFolder,
+
+    asyncHandler(async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.send("Some errors occured validating post folder");
+            //return res.status(400).render(create folder view, {errors: errors.array(), data: req.body});
+        }
+        const folderId = parseInt(req.params.folderId);
+        const { folderName } = req.body;
+        const userId = req.user?.id;
+
+        // check user owns that folder
+        const folder = await prisma.folder.findUnique({
+            where: {
+                id: folderId,
+            },
+        });
+        if (!folder || folder.userId !== userId) {
+            return res.status(403).send("Forbidden: You do not own this folder");
+            //return res.status(403).render();
+        }
+        await prisma.folder.update({
+            where: {
+                id: folderId,
+            },
+            data: {
+                folderName: folderName,
+            },
+        });
+
+        return res.redirect("/dashboard");
+    }),
+]
 
 module.exports = { postFolder, deleteFolder, patchFolder };
