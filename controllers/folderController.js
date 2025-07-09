@@ -55,6 +55,7 @@ const postFolder = [
 
 const deleteFolder = asyncHandler(async (req, res) => {
     const folderId = parseInt(req.params.folderId);
+    const userId = req.user?.id;
 
     if (isNaN(folderId)) {
         return res.send("folderId must be a number");
@@ -65,13 +66,15 @@ const deleteFolder = asyncHandler(async (req, res) => {
     await prisma.file.deleteMany({
         where: {
             folderId: folderId,
+            userId: userId,
         },
     });
 
     // delete the folder
-    await prisma.folder.delete({
+    await prisma.folder.deleteMany({
         where: {
             id: folderId,
+            userId: userId,
         },
     });
     res.redirect("/dashboard");
