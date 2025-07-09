@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
+const expressSession = require("express-session");
+const {PrismaSessionStore} = require("@quixo3/prisma-session-store");
+const prisma = require("../prisma/client");
 const path = require("node:path");
 const indexRouter = require("./routes/indexRouter");
 const authRouter = require("./routes/authRouter");
@@ -15,17 +18,36 @@ app.use(express.static(assetsPath));
 app.use(express.urlencoded({ extended: false}));
 app.use(postToPatchOverride);
 
+app.use(
+   expressSession({
+      cookie: {
+         maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days in milliseconds
+      },
+      secret: process.env.SECRET,
+      resave: false,
+      saveUninitialized: false,
+      store: new PrismaSessionStore(
+         prisma,
+         {
+            checkPeriod: 2 * 6 * 1000,
+            dbRecordIdIsSessionId: true,
+            dbRecordIdFunction: undefined,
+         }
+      )
+   })
+)
+
 app.use("/files", fileRouter);
 app.use("/folders", folderRouter);
 app.use("/user", authRouter);
 app.use("/", indexRouter);
 
- app.use((err, req, res, next) => {
-    console.error(err);
-    res.status(500).send(err);
- });
+app.use((err, req, res, next) => {
+   console.error(err);
+   res.status(500).send(err);
+});
 
- const PORT = process.env.PORT || 3000;
- app.listen(PORT, () => {
-    console.log("App is running");
- });
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+   console.log("App is running");
+});
