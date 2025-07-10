@@ -49,15 +49,8 @@ const getFiles = async (req, res, next) => {
 };
 
 const getDashboard = async (req, res) => {
-    const userId = req.user?.id;
 
     return res.render("dashboard", {user: req.user, folders: req.folders, files: req.files});
 };
 
-const getDashboardFolder = async (req, res) => {
-    const userId = req.user?.id;
-    const folderId = parseInt(req.params.folderId);
-
-    return res.render("dashboard", {user: req.user, folders: req.folders, files: req.files});
-}
-module.exports = { getLandingPage, getDashboard, getDashboardFolder, getFolders, getFiles };
+module.exports = { getLandingPage, getDashboard, getFolders, getFiles };
