@@ -7,7 +7,6 @@ const isAuthorized = require("../middleware/isAuthorized");
 // Dashboard will open modals for new folder / file upload
 
 indexRouter.get("/dashboard/:folderId", isAuthorized, getFolders, getFiles, getDashboard);
-
 indexRouter.get("/dashboard", isAuthorized, getFolders, getFiles, getDashboard);
 indexRouter.get("/", getLandingPage);
 
