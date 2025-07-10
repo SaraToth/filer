@@ -18,11 +18,11 @@ const getFolders = async (req, res, next) => {
     next();
 };
 
-const getDashboard = async (req, res) => {
+const getFiles = async (req, res, next) => {
     const userId = req.user?.id;
 
-    // need to get all the files
-    const files = await prisma.file.findMany({
+    // Default folder is My Files
+    let files = await prisma.file.findMany({
         where: {
             userId: userId,
             folder: {
@@ -31,22 +31,33 @@ const getDashboard = async (req, res) => {
         }
     });
 
-    return res.render("dashboard", {user: req.user, folders: req.folders, files});
+    // If user clicks a different folder:
+    if (req.params.folderId) {
+        const folderId = parseInt(req.params.folderId);
+
+        files = await prisma.file.findMany({
+            where: {
+                userId: userId,
+                folder: {
+                    id: folderId,
+                },
+            },
+        });
+    }
+    req.files = files;
+    next();
+};
+
+const getDashboard = async (req, res) => {
+    const userId = req.user?.id;
+
+    return res.render("dashboard", {user: req.user, folders: req.folders, files: req.files});
 };
 
 const getDashboardFolder = async (req, res) => {
     const userId = req.user?.id;
     const folderId = parseInt(req.params.folderId);
 
-    // need to get all the files
-    const files = await prisma.file.findMany({
-        where: {
-            userId: userId,
-            folder: {
-                id: folderId,
-            },
-        },
-    });
-    return res.render("dashboard", {user: req.user, folders: req.folders, files});
+    return res.render("dashboard", {user: req.user, folders: req.folders, files: req.files});
 }
-module.exports = { getLandingPage, getDashboard, getDashboardFolder, getFolders };
+module.exports = { getLandingPage, getDashboard, getDashboardFolder, getFolders, getFiles };
