@@ -38,9 +38,7 @@ const getFiles = async (req, res, next) => {
         files = await prisma.file.findMany({
             where: {
                 userId: userId,
-                folder: {
-                    id: folderId,
-                },
+                folderId: folderId
             },
         });
     }

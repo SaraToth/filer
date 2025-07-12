@@ -9,14 +9,13 @@ const indexRouter = require("./routes/indexRouter");
 const authRouter = require("./routes/authRouter");
 const folderRouter = require("./routes/folderRouter");
 const fileRouter = require("./routes/fileRouter");
-const assetsPath = path.join(__dirname, "public");
 const postToPatchOverride = require("./middleware/postToPatchOverride");
 const passport = require("passport");
 require("./config/passport");
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-app.use(express.static(assetsPath));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false}));
 app.use(postToPatchOverride);
 
