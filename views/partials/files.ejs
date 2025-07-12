@@ -1,12 +1,19 @@
 <main style="border: 1px solid black;">
-    <h2>My Files</h2>
-    <p>Files listed here</p>
-    <ul>
-        <% if (locals.files) {%> 
+    <h2><%=locals.currentFolder.folderName%></h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Created</th>
+            <th>link</th>
+        </tr>
+        <% if (locals.files) {%>
             <% files.forEach((file) => {%>
-                <li><%=file.fileName%></li>
+                <tr>
+                    <td><%=file.fileName%></td>
+                    <td><%=file.createdAt.toLocaleDateString()%></td>
+                    <td><%=file.link%></td>
+                </tr>
             <%})%>
         <%}%>
-    </ul>
-
+    </table>
 </main>
