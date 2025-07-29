@@ -3,32 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/global.css">
+    <link rel="stylesheet" href="/signup.css">
+    <link rel="stylesheet" href="/navbar.css">
     <title>Sign up</title>
 </head>
 <body>
     <section>
-        <a href="/">Filer</a>
+        <%- include("partials/navbar")%>
         <h1>Sign up for Filer</h1>
         <%- include("partials/errors")%>
-        <form action="/user/signup" method="post">
-            <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" name="firstName" required>
+        <div class="form-container">
+            <form action="/user/signup" method="post">
+                <div class="form-item">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
 
-            <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" name="lastName" required>
+                <div class="form-item">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+                <div class="form-item">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+                <div class="form-item">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
 
-            <label for="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <div class="form-item">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
 
-            <span>Already a member? <a href="/user/login">Login</a></span>
-            <button type="submit">Sign up</button>
-        </form>
+                <span>Already a member? <a href="/user/login">Login</a></span>
+                <button type="submit">Sign up</button>
+            </form>
+        </div>
     </section>
 
 </body>

@@ -1,0 +1,37 @@
+body {
+    height: 100vh;
+    background-image: url("./desktop.avif");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+h1 {
+    margin-top: 200px;
+    font-size: 96px;
+}
+
+p {
+    font-size: 24px;
+}
+
+.signup {
+display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: white;
+  color: black;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 9999px; /* full pill */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 200ms, transform 100ms, box-shadow 100ms;
+  text-decoration: none;
+}
+
+.signup:hover {
+    background-color: rgb(212 212 216);
+}
