@@ -1,0 +1,58 @@
+body {
+    height: 100vh;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+}
+.wrapper {
+    display: flex;
+    flex: 1;
+}
+
+.files {
+    border: 1px solid black;
+}
+
+.sidebar {
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0px;
+}
+
+.sidebar li {
+    text-decoration: none;
+}
+
+
+
+.newFolder {
+display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: black;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 9999px; /* full pill */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 200ms, transform 100ms, box-shadow 100ms;
+  text-decoration: none;
+}
+
+.newFolder:hover {
+    background-color: #280590;
+}
+
+.files {
+    flex: 1;
+}

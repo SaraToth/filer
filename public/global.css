@@ -1,3 +1,8 @@
 body {
     margin: 0px 50px;
 }
+
+/*  Need to fix */
+.errors {
+    color: white;
+}
