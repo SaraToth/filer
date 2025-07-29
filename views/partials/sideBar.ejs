@@ -1,6 +1,13 @@
-<section style="border: 1px solid black;">
+<section class="sidebar">
     <ul>
-        <li>New</li>
+        <!-- Dropdown Menu Trigger -->
+        <li class="dropdown">
+            <a href="#" class="newFolder">New</a>
+            <div class="dropdown-content">
+                <a href="#" id="new-folder">New Folder</a>
+                <a href="#" id="new-file">New File</a>
+            </div>
+        </li>
     </ul>
     <h2>Folders</h2>
     <ul>
@@ -11,3 +18,14 @@
         <%}%>
     </ul>
 </section>
+
+<div id="folderModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form action="/new-folder" method="post">
+            <label for="folderName">Folder Name:</label>
+            <input type="text" id="folderName" name="folderName">
+            <button type="submit">Create</button>
+        </form>
+    </div>
+</div>
