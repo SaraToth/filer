@@ -19,6 +19,7 @@
     </ul>
 </section>
 
+<!-- Hidden Modal for New Folder -->
 <div id="folderModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -29,3 +30,8 @@
         </form>
     </div>
 </div>
+
+<!-- Hidden File Input -->
+<form id="fileUploadForm" action="/upload-file" method="post" enctype="multipart/form-data" style="display: none;">
+    <input type="file" id="fileInput" name="fileInput" onchange="document.getElementById('fileUploadForm').submit();">
+</form>
