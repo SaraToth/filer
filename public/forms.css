@@ -1,37 +1,37 @@
 body {
-    padding: 0;
-    height: 100vh;
-    background-image: url("./desktop.avif");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+  padding: 0;
+  height: 100vh;
+  background-image: url("./desktop.avif");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 form {
-    background-color: white;
-    color: black;
-    display: flex;
-    flex-direction: column;
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    width: 100%;
-    max-width: 400px;
-    gap: 1rem;
+  background-color: white;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 400px;
+  gap: 1rem;
 }
 
 .form-item {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 input {
-    margin-top: 0;
+  margin-top: 0;
   padding: 0.75rem 1rem;
   border: 1px solid #d9d9d9;
   border-radius: 8px;
@@ -54,5 +54,5 @@ button:hover {
 }
 
 span {
-    text-align: center;
+  text-align: center;
 }
