@@ -56,9 +56,6 @@ body {
     text-decoration: none;
 }
 
-/* .dropdown:hover .dropdown-content {
-    display: block;
-} */
 
 .dropdown-content.show {
     display: block;
@@ -75,9 +72,9 @@ body {
 }
 
 .folder-link:hover {
-    color:  #280590;
     cursor: pointer;
-    text-decoration: underline;
+      background-color: lightgray; /* Similar to Google Drive active blue */
+  border-radius: 8px;
 }
 
 .newFolder {
@@ -205,4 +202,16 @@ display: inline-block;
   margin-top: 0;
   font-size: 1.5rem;
   font-weight: 600;
+}
+
+.folder-link {
+    display: block;
+    padding: 5px;
+    max-width: 75%;
+}
+
+.folder-link.active-folder {
+  background-color: black; /* Similar to Google Drive active blue */
+  border-radius: 8px;
+    color: white;
 }

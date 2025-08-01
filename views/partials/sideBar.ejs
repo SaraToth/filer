@@ -13,7 +13,10 @@
     <ul>
         <% if (locals.folders) {%>
             <% folders.forEach((folder) => {%>
-                <li><a href="/dashboard/<%=folder.id%>" class="folder-link"><%=folder.folderName%></a></li>
+                <li><a href="/dashboard/<%= folder.id %>" class="folder-link <%= currentFolder && currentFolder.id === folder.id ? 'active-folder' : '' %>">
+  <%= folder.folderName %>
+</a>
+</li>
             <%})%>
         <%}%>
     </ul>
@@ -45,6 +48,10 @@
     const dropdownTrigger = document.querySelector(".newFolder");
     const dropdownContent = document.querySelector(".dropdown-content");
 
+    const folderLink = document.querySelectorAll(".folder-link");
+    const filesTitle = document.querySelector(".files-title");
+
+
     newFolderBtn.onclick = () => {
         modal.style.display = "block";
     };
@@ -74,4 +81,6 @@
         e.preventDefault();
         document.getElementById("fileInput").click();
     });
+
+
 </script>
