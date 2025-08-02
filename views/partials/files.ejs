@@ -17,8 +17,12 @@
                     <td class="kebab-dropdown">
                         <a href="#" class="kebab">⋮</a>
                         <div class="kebab-content">
-                            <a href="#">Delete file</a>
-                            <a href="#">Download file</a>
+                                <form action="/files/<%= file.id %>?_method=DELETE" method="post">
+                                    <button>Delete file</button>
+                                </form>
+                                <form action="#">
+                                    <button>Share file</button>
+                                </form>
                         </div>
                     </td>
                 </tr>

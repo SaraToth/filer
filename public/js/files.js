@@ -1,13 +1,21 @@
-    const kebabTrigger = document.querySelector(".kebab");
+    const kebabTriggers = document.querySelectorAll(".kebab");
     const kebabContent = document.querySelector(".kebab-content");
 
-    kebabTrigger.addEventListener("click", (e) => {
-        e.preventDefault();
-        kebabContent.classList.toggle("show");
-    });
+    kebabTriggers.forEach((kebabTrigger) => {
+        kebabTrigger.addEventListener("click", (e) => {
+            e.preventDefault();
+            const kebabContent = kebabTrigger.nextElementSibling; // Assumes the kebab-content immediately after
+            if (!kebabContent) return;
+
+            kebabContent.classList.toggle("show");
+        });
+    })
+
 
     window.addEventListener("click", (e) => {
         if (!e.target.closest(".kebab-dropdown")) {
-            kebabContent.classList.remove("show");
+            document.querySelectorAll(".kebab-content.show").forEach(menu => {
+                menu.classList.remove("show");
+            });
         }
     });

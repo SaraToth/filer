@@ -51,12 +51,21 @@ td:last-child,
 th:last-child {
   width: 40px;
   text-align: center;
+  vertical-align: middle;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 /* Kebab dropdown */
-td:last-child a {
+td:last-child a, td:last-child button {
+  display: block;
   text-decoration: none;
   color: black;
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 
@@ -81,17 +90,24 @@ td:last-child a {
 }
 
 /* Dropdown items (links) */
-.kebab-content a {
+.kebab-content button {
+   all: unset;
+   display: inline-block;
+   width: 100%;
+   box-sizing: border-box;
     color: black;
     padding: 10px;
     display: block;
     text-decoration: none;
+    cursor: pointer;
 }
 
-.kebab-content a:hover {
+.kebab-content button:hover {
     background-color: #280590;
     border-radius: 0.5rem;
     color: white;
+    cursor: pointer;
+
 }
 
 /* Toggles on when kebab is clicked */
