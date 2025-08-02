@@ -6,6 +6,7 @@
             <th>Name</th>
             <th>Created</th>
             <th>link</th>
+            <th></th>
         </tr>
         <% if (locals.files) {%>
             <% files.forEach((file) => {%>
@@ -13,9 +14,33 @@
                     <td><%=file.fileName%></td>
                     <td><%=file.createdAt.toLocaleDateString()%></td>
                     <td><%=file.link%></td>
+                    <td class="kebab-dropdown">
+                        <a href="#" class="kebab">⋮</a>
+                        <div class="kebab-content">
+                            <a href="#">Delete file</a>
+                            <a href="#">Download file</a>
+                        </div>
+                    </td>
                 </tr>
             <%})%>
         <%}%>
     </table>
     </div>
 </main>
+
+
+<script>
+    const kebabTrigger = document.querySelector(".kebab");
+    const kebabContent = document.querySelector(".kebab-content");
+
+    kebabTrigger.addEventListener("click", (e) => {
+        e.preventDefault();
+        kebabContent.classList.toggle("show");
+    });
+
+    window.addEventListener("click", (e) => {
+        if (!e.target.closest(".kebab-dropdown")) {
+            kebabContent.classList.remove("show");
+        }
+    });
+</script>

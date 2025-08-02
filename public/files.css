@@ -1,0 +1,100 @@
+.files {
+    flex: 1;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.files h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.table-wrapper {
+  background-color: white;
+}
+
+
+.files table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+  background-color: white;
+  margin-bottom: 10px;
+}
+
+/* Styles table header and all rows */
+.files th,
+.files td {
+  word-wrap: break-word;
+  overflow-wrap:anywhere;
+  text-align: left;
+  padding: 1rem;
+  border-bottom: 1px solid #b0afaf;
+}
+
+/* Table header row */
+.files th {
+  font-weight: 600;
+}
+
+/* Hover effect for table rows */
+.files tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Kebab menu column in table */
+td:last-child,
+th:last-child {
+  width: 40px;
+  text-align: center;
+}
+
+/* Kebab dropdown */
+td:last-child a {
+  text-decoration: none;
+  color: black;
+}
+
+
+/* Kebab Dropdown Styles */
+
+/* Dropdown wrapper */
+.kebab-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown content wrapper */
+.kebab-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  min-width: 160px;
+  top: 0;
+  right: 0;
+  border-radius: 0.5rem;
+}
+
+/* Dropdown items (links) */
+.kebab-content a {
+    color: black;
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+}
+
+.kebab-content a:hover {
+    background-color: #280590;
+    border-radius: 0.5rem;
+    color: white;
+}
+
+/* Toggles on when kebab is clicked */
+.kebab-content.show {
+    display: block;
+}

@@ -1,0 +1,169 @@
+.sidebar {
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Remove default styles on sidebar */
+.sidebar ul {
+    list-style: none;
+    padding: 0px;
+}
+
+
+/* Sidebar "New" Dropdown Styles */
+
+/* Dropdown Wrapper */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown content wrapper */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    min-width: 160px;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+/* Dropdown items (links) */
+.dropdown-content a {
+    color: black;
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background-color: #280590;
+    color: white;
+}
+
+/* .show class is added when dropdown trigger is clicked */
+.dropdown-content.show {
+    display: block;
+}
+
+/* Dropdown trigger "New" link */
+.newFolder {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: black;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 9999px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 200ms, transform 100ms, box-shadow 100ms;
+    text-decoration: none;
+}
+
+.newFolder:hover {
+    background-color: #280590;
+}
+
+/* All existing locals.folders in the sidebar */
+.folder-link {
+    display: block;
+    padding: 5px;
+    max-width: 75%;
+    color: black;
+    text-decoration: none;
+}
+
+.folder-link:hover {
+    cursor: pointer;
+    background-color: lightgray;
+    border-radius: 8px;
+}
+
+/* Styles the currently selected folder in sidebar */
+.folder-link.active-folder {
+    background-color: black;
+    border-radius: 8px;
+    color: white;
+}
+
+
+/* Modal Styles */
+
+/* Modal overlay */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Create new folder form */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal-content {
+  background-color: white;
+  color: black;
+  margin: 10% auto;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+}
+
+/* Close modal X */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 1.25rem;
+  color: #666;
+  cursor: pointer;
+}
+
+/* Modal form input element */
+.modal-content input[type="text"] {
+  padding: 0.75rem 1rem;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+/* Modal form "create" button */
+.modal-content button {
+  padding: 0.75rem 1rem;
+  border: none;
+  background-color: #000000;
+  color: white;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modal-content button:hover {
+  background-color: #280590;
+}
+
