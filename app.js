@@ -13,12 +13,14 @@ const postToPatchOverride = require("./middleware/postToPatchOverride");
 const passport = require("passport");
 require("./config/passport");
 
+// General middlewares
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false}));
 app.use(postToPatchOverride);
 
+// Session configuration
 app.use(
    expressSession({
       cookie: {
@@ -40,6 +42,7 @@ app.use(
       )
    })
 )
+// Authentication
 app.use(passport.initialize());
 app.use(passport.session());
 

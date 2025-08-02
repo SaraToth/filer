@@ -36,6 +36,7 @@
 </div>
 
 <!-- Hidden File Input -->
-<form id="fileUploadForm" action="/upload-file" method="post" enctype="multipart/form-data" style="display: none;">
+<form id="fileUploadForm" action="/files/upload-file" method="post" enctype="multipart/form-data" style="display: none;">
     <input type="file" id="fileInput" name="fileInput" onchange="document.getElementById('fileUploadForm').submit();">
+    <input type="hidden" name="folderId" value="<%= currentFolder ? currentFolder.id : '' %>">
 </form>
