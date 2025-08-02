@@ -22,6 +22,7 @@
     </ul>
 </section>
 
+
 <!-- Hidden Modal for New Folder -->
 <div id="folderModal" class="modal">
     <div class="modal-content">
@@ -38,49 +39,3 @@
 <form id="fileUploadForm" action="/upload-file" method="post" enctype="multipart/form-data" style="display: none;">
     <input type="file" id="fileInput" name="fileInput" onchange="document.getElementById('fileUploadForm').submit();">
 </form>
-
-
-<script>
-    const modal = document.getElementById("folderModal");
-    const newFolderBtn = document.getElementById("new-folder");
-    const closeModal = document.querySelector(".modal .close");
-
-    const dropdownTrigger = document.querySelector(".newFolder");
-    const dropdownContent = document.querySelector(".dropdown-content");
-
-    const folderLink = document.querySelectorAll(".folder-link");
-    const filesTitle = document.querySelector(".files-title");
-
-
-    newFolderBtn.onclick = () => {
-        modal.style.display = "block";
-    };
-
-    closeModal.onclick = () => {
-        modal.style.display = "none";
-    };
-
-    window.onclick = (event) => {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    };
-
-    dropdownTrigger.addEventListener("click", (e) => {
-        e.preventDefault();
-        dropdownContent.classList.toggle("show");
-    });
-
-    window.addEventListener("click", (e) => {
-        if (!e.target.closest(".dropdown")) {
-            dropdownContent.classList.remove("show");
-        }
-    });
-
-    document.getElementById("new-file").addEventListener("click", function (e) {
-        e.preventDefault();
-        document.getElementById("fileInput").click();
-    });
-
-
-</script>
