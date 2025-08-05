@@ -19,7 +19,6 @@ const downloadFile = async (req, res) => {
         }
     });
 
-
     if (!file) {
         return res.status(404).send("File not found");
     };
@@ -31,9 +30,37 @@ const downloadFile = async (req, res) => {
      
 };
 
-const deleteFile = (req, res) => {
-    const { fileId } = req.params;
-    res.send("This is how we delete a file");
+const deleteFile = async (req, res) => {
+    const fileId = Number(req.params.fileId);
+    const userId = req.user?.id;
+
+    // Double check user authentification
+    if (!userId) {
+        return res.status(401).send("Unauthorized: User not logged in.");
+    };
+
+    // Access file information
+    const file = await prisma.file.findUnique({
+        where: {
+            id: fileId,
+            userId: userId,
+        },
+    });
+
+    // Delete file from local directory
+    const filePath = path.join(__dirname, "..", file.link); 
+    fs.unlinkSync(filePath);
+
+    // Delete file information from database
+    await prisma.file.delete({
+        where: {
+            id: fileId,
+            userId: userId,
+        }
+    });
+
+    // Send a success response to front end
+    res.status(204).send();
 };
 
 const uploadFile = async (req, res) => {

@@ -17,9 +17,10 @@
                     <td class="kebab-dropdown">
                         <a href="#" class="kebab">⋮</a>
                         <div class="kebab-content">
-                                <form action="/files/<%= file.id %>?_method=DELETE" method="post">
-                                    <button>Delete file</button>
-                                </form>
+                                <button onclick="deleteFile(`<%= file.id%>`)">Delete file</button>
+                                <!-- <form action="/files/<%= file.id %>/delete?_method=DELETE" method="post">
+                                    <button type="submit">Delete file</button>
+                                </form> -->
                                 <a href="/files/<%= file.id %>/download">Download file</a>
                         </div>
                     </td>
@@ -29,3 +30,25 @@
     </table>
     </div>
 </main>
+
+
+<script>
+    const deleteFile = (fileId) => {
+        fetch(`/files/${fileId}/delete`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then((res) => {
+            if (res.ok) {
+                location.reload(); 
+            } else {
+                alert(`${fileId}`);
+            }
+        })
+        .catch((err) => {
+            console.error("Error:", err);
+        });
+    }
+</script>
