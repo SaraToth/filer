@@ -102,7 +102,7 @@ td:last-child a, td:last-child button {
     cursor: pointer;
 }
 
-.kebab-content button:hover {
+.kebab-content button:hover, .kebab-content a:hover {
     background-color: #280590;
     border-radius: 0.5rem;
     color: white;

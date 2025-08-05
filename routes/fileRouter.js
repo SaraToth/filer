@@ -16,6 +16,7 @@ fileRouter.use("/", isAuthorized);
 fileRouter.get("/:fileId/download", downloadFile);
 fileRouter.delete("/:fileId", deleteFile);
 fileRouter.post("/upload-file", upload.single("fileInput"), uploadFile);
+fileRouter.get("/:fileId/download", isAuthorized, downloadFile);
 
 
 module.exports = fileRouter;
