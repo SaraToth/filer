@@ -44,13 +44,13 @@ const postFolder = [
             //return res.status(401).render(some kind of view);
         };
 
-        await prisma.folder.create({
+        const newFolder = await prisma.folder.create({
             data: {
                 folderName: folderName,
                 userId: userId,
             },
         });
-        return res.redirect("/dashboard");
+        return res.redirect(`/dashboard/${newFolder.id}`);
     }),
 ];
 
