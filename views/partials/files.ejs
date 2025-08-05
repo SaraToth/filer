@@ -17,10 +17,7 @@
                     <td class="kebab-dropdown">
                         <a href="#" class="kebab">⋮</a>
                         <div class="kebab-content">
-                                <button onclick="deleteFile(`<%= file.id%>`)">Delete file</button>
-                                <!-- <form action="/files/<%= file.id %>/delete?_method=DELETE" method="post">
-                                    <button type="submit">Delete file</button>
-                                </form> -->
+                                <button class="delete-file-btn" data-fileid=<%= file.id%>>Delete file</button>
                                 <a href="/files/<%= file.id %>/download">Download file</a>
                         </div>
                     </td>
@@ -32,7 +29,7 @@
 </main>
 
 
-<script>
+<!-- <script>
     const deleteFile = (fileId) => {
         fetch(`/files/${fileId}/delete`, {
             method: "DELETE",
@@ -51,4 +48,4 @@
             console.error("Error:", err);
         });
     }
-</script>
+</script> -->
