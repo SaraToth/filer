@@ -1,13 +1,13 @@
 const asyncHandler = require("express-async-handler");
 const prisma = require("../prisma/client");
 const { body, validationResult } = require("express-validator");
-const { use } = require("passport");
+const alphaNumericSpaces = /^[a-zA-Z0-9 ]+$/;
 
 const validateFolder = [
     body("folderName")
         .trim()
         .notEmpty().withMessage("Folder name cannot be blank.")
-        .isAlphanumeric().withMessage("Folder name can only contain letters or numbers")
+        .matches(alphaNumericSpaces).withMessage("Folder name can only contain letters, numbers and spaces.")
         .custom(async (folderName, {req}) => {
             const userId = req.user?.id;
 
