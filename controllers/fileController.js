@@ -76,7 +76,7 @@ const uploadFile = async (req, res) => {
             }
         });
 
-        res.redirect("/dashboard");
+        res.redirect(`/dashboard/${req.body.folderId}`);
     } catch (err) {
         console.error("Upload error:", err);
         res.status(500).send("Upload failed");
