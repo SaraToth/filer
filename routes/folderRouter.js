@@ -6,7 +6,7 @@ const isAuthorized = require("../middleware/isAuthorized");
 folderRouter.use("/", isAuthorized);
 
 folderRouter.post("/", postFolder);
-folderRouter.delete("/:folderId", deleteFolder);
+folderRouter.delete("/:folderId/delete", deleteFolder);
 folderRouter.patch("/:folderId", patchFolder);
 
 module.exports = folderRouter;

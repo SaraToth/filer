@@ -13,10 +13,14 @@
     <ul>
         <% if (locals.folders) {%>
             <% folders.forEach((folder) => {%>
-                <li><a href="/dashboard/<%= folder.id %>" class="folder-link <%= currentFolder && currentFolder.id === folder.id ? 'active-folder' : '' %>">
-  <%= folder.folderName %>
-</a>
-</li>
+                <li class="folder-item" data-folderid=<%= folder.id%>>
+                    <a href="/dashboard/<%= folder.id %>" data-folderid=<%=folder.id%> class="folder-link <%= currentFolder && currentFolder.id === folder.id ? 'active-folder' : '' %>">
+                        <%= folder.folderName %>
+                    </a>
+                    <div class="folder-context-menu hidden">
+                        <button class="delete-folder-btn">Delete</button>
+                    </div>
+                </li>
             <%})%>
         <%}%>
     </ul>

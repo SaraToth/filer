@@ -2,6 +2,8 @@ const asyncHandler = require("express-async-handler");
 const prisma = require("../prisma/client");
 const { body, validationResult } = require("express-validator");
 const alphaNumericSpaces = /^[a-zA-Z0-9 ]+$/;
+const fs = require("fs");
+const path = require("node:path");
 
 const validateFolder = [
     body("folderName")
@@ -63,6 +65,28 @@ const deleteFolder = asyncHandler(async (req, res) => {
         //return res.status(400).render(some view that displays the error?)
     }
 
+    // Delete all files in that folder locally
+
+    // Access the files
+    const files = await prisma.file.findMany({
+        where: {
+            folderId: folderId,
+            userId: userId,
+        },
+    });
+
+    // Delete files from local directory
+    files.forEach((file) => {
+        const filePath = path.join(__dirname, "..", file.link); 
+        try {
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+            }
+        } catch (err) {
+            console.error(`Failed to delete file at ${filePath}:`, err);
+        }
+    })
+
     // delete all files with that folderId first
     await prisma.file.deleteMany({
         where: {
@@ -78,7 +102,9 @@ const deleteFolder = asyncHandler(async (req, res) => {
             userId: userId,
         },
     });
-    res.redirect("/dashboard");
+    
+    // Send a success response to front end
+    return res.status(200).json({ success: true })
 });
 
 const patchFolder = [
