@@ -53,6 +53,13 @@ app.use("/folders", folderRouter);
 app.use("/user", authRouter);
 app.use("/", indexRouter);
 
+app.use((req, res) => {
+   res.status(404).render(".errorPage", {
+      status: 404,
+      message: "Page Not Found"
+   });
+});
+
 // Error Handler
 app.use((err, req, res, next) => {
    console.error(err);

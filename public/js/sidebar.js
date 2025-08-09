@@ -159,23 +159,27 @@ closeRenameModal.onclick = () => {
 
 
 // Folder delete request to the server
-const deleteFolder = (folderId) => {
-    fetch(`/folders/${folderId}/delete`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-    .then((res) => {
-        if(res.ok) {
+const deleteFolder = async (folderId) => {
+    try { 
+        const res = await fetch(`/folders/${folderId}/delete`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (res.ok) {
             window.location.href = "/dashboard";
-        } else {
-            alert(`${folderId}`);
+        } else if (res.status === 400) {
+            const data = await res.json();
+
+            if (data.status && data.message) {
+                window.location.href = `/error?message=${data.message}&status=${data.status}`;
+            }
         }
-    })
-    .catch((err) => {
+    } catch (err) {
         console.error("Error:", err);
-    });
+    }
 };
 
 // Patch request to server to rename folder
@@ -193,7 +197,7 @@ const patchFolder = async (folderId, newFolderName) => {
         if (res.ok) {
             renameModal.style.display = "none";
             location.reload();
-        } else if (res.status === 400) {
+        } else if ((res.status === 400) || (res.status === 403)) {
             const data = await res.json();
 
             const oldErrors = renameModal.querySelector(".errors");

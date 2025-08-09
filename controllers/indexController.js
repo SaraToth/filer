@@ -12,4 +12,9 @@ const getDashboard = async (req, res) => {
     return res.render("dashboard", {user: req.user, currentFolder: req.currentFolder, folders: req.folders, files: req.files, errors: null});
 };
 
-module.exports = { getLandingPage, getDashboard };
+const getErrorPage = async (req, res) => {
+    const { message, status } = req.query;
+    return res.render("errorPage", { message, status });
+}
+
+module.exports = { getLandingPage, getDashboard, getErrorPage };

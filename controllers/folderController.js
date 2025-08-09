@@ -44,10 +44,6 @@ const postFolder = [
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({
-                user: req.user, 
-                currentFolder: req.currentFolder, 
-                folders: req.folders, 
-                files: req.files,
                 errors: errors.array()
             });
         }
@@ -75,8 +71,7 @@ const deleteFolder = asyncHandler(async (req, res) => {
     const userId = req.user?.id;
 
     if (isNaN(folderId)) {
-        // ISSUE: This would not render since the frontend is expecting json
-        return res.status(400).render("errorPage", {
+        return res.status(400).json({
             status: 400,
             message: "Invalid Folder id: Sorry, something went wrong with attempting to delete the folder."
         })
@@ -151,10 +146,10 @@ const patchFolder = [
             },
         });
         if (!folder || folder.userId !== userId) {
-            return res.status(403).render("errorPage", {
+            return res.status(403).json({
                 status: 403,
                 message: "Forbidden: You do not own this folder."
-            })
+            });
         }
 
         // Escapes renaming logic to prevent renaming default folder
