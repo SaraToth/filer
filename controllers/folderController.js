@@ -70,6 +70,11 @@ const deleteFolder = asyncHandler(async (req, res) => {
     if (isNaN(folderId)) {
         return res.send("folderId must be a number");
     }
+
+    // Escape the deletion process to avoid deleting the default folder
+    if (req.defaultFolder) {
+        return res.status(200).json({ success: true })
+    }
     // Delete all files in that folder locally
 
     // Access the files
@@ -150,4 +155,23 @@ const patchFolder = [
     }),
 ]
 
-module.exports = { postFolder, deleteFolder, patchFolder };
+const checkDefaultFolder = asyncHandler(async (req, res, next) => {
+    const userId = req.user.id;
+    const folderId = parseInt(req.params.folderId);
+
+    const defaultFolder = await prisma.folder.findFirst({
+        where: {
+            userId: userId,
+            folderName: "My Files",
+        }
+    });
+
+    if (defaultFolder.id === folderId) {
+        req.defaultFolder = true;
+    } else {
+        req.defaultFolder = false;
+    }
+    next();
+});
+
+module.exports = { postFolder, deleteFolder, patchFolder, checkDefaultFolder };
