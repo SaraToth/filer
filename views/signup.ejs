@@ -12,9 +12,9 @@
     <section>
         <%- include("partials/navbar")%>
         <h1>Sign up for Filer</h1>
-        <%- include("partials/errors")%>
         <div class="form-container">
             <form action="/user/signup" method="post">
+                <span class="error-span"><%- include("partials/errors")%></span>
                 <div class="form-item">
                     <label for="firstName">First Name:</label>
                     <input type="text" id="firstName" name="firstName" required>

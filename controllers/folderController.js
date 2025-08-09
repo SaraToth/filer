@@ -4,7 +4,6 @@ const { body, validationResult } = require("express-validator");
 const alphaNumericSpaces = /^[a-zA-Z0-9 ]+$/;
 const fs = require("fs");
 const path = require("node:path");
-const { cursorTo } = require("node:readline");
 
 const validateFolder = [
     body("folderName")
@@ -70,12 +69,14 @@ const deleteFolder = asyncHandler(async (req, res) => {
     const folderId = parseInt(req.params.folderId);
     const userId = req.user?.id;
 
-    if (isNaN(folderId)) {
+    if (Number.isNaN(folderId)) {
         return res.status(400).json({
             status: 400,
             message: "Invalid Folder id: Sorry, something went wrong with attempting to delete the folder."
         })
     }
+
+
 
     // Escape the deletion process to avoid deleting the default folder
     if (req.defaultFolder) {

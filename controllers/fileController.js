@@ -20,7 +20,10 @@ const downloadFile = async (req, res) => {
     });
 
     if (!file) {
-        return res.status(404).send("File not found");
+        return res.status(404).render("errorPage", {
+            status: 404,
+            message: "Page Not Found"
+        })
     };
 
     // __dirname will result in root/controller/
@@ -36,7 +39,10 @@ const deleteFile = async (req, res) => {
 
     // Double check user authentification
     if (!userId) {
-        return res.status(401).send("Unauthorized: User not logged in.");
+        return res.status(401).render("errorPage", {
+            status: 401,
+            message: "Unauthorized: User not logged in"
+        });
     };
 
     // Access file information
@@ -108,7 +114,10 @@ const uploadFile = async (req, res) => {
         return res.redirect(`/dashboard/${req.body.folderId}`);
     } catch (err) {
         console.error("Upload error:", err);
-        res.status(500).send("Upload failed");
+        res.status(500).render("errorPage", {
+            status: 500,
+            message: "Upload failed"
+        });
     }
 };
 
