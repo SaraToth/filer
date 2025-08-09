@@ -53,8 +53,9 @@ app.use("/folders", folderRouter);
 app.use("/user", authRouter);
 app.use("/", indexRouter);
 
+// 404 Handler for non existant routes
 app.use((req, res) => {
-   res.status(404).render(".errorPage", {
+   res.status(404).render("errorPage", {
       status: 404,
       message: "Page Not Found"
    });
