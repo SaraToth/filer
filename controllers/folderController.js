@@ -29,6 +29,13 @@ const validateFolder = [
         }),
 ]
 
+const validatePatchFolder = [
+    body("newFolderName")
+        .trim()
+        .notEmpty().withMessage("Folder name cannot be blank.")
+        .matches(alphaNumericSpaces).withMessage("Folder name can only contain letters, numbers and spaces."),
+];
+
 const postFolder = [
     validateFolder,
 
@@ -36,7 +43,7 @@ const postFolder = [
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.send("Some errors occured validating post folder");
-            //return res.status(400).render(create folder view, {errors: errors.array(), data: req.body});
+
         }
         const { folderName } = req.body; // from folder form
         const userId = req.user?.id;
@@ -108,16 +115,17 @@ const deleteFolder = asyncHandler(async (req, res) => {
 });
 
 const patchFolder = [
-    validateFolder,
+    validatePatchFolder,
 
     asyncHandler(async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.send("Some errors occured validating post folder");
+            return res.send("Some errors occured validating patch folder");
             //return res.status(400).render(create folder view, {errors: errors.array(), data: req.body});
         }
+
         const folderId = parseInt(req.params.folderId);
-        const { folderName } = req.body;
+        const folderName = req.body.newFolderName;
         const userId = req.user?.id;
 
         // check user owns that folder
@@ -139,7 +147,8 @@ const patchFolder = [
             },
         });
 
-        return res.redirect("/dashboard");
+        // Send a success response to front end
+        return res.status(200).json({ success: true })
     }),
 ]
 

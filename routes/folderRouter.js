@@ -7,6 +7,6 @@ folderRouter.use("/", isAuthorized);
 
 folderRouter.post("/", postFolder);
 folderRouter.delete("/:folderId/delete", deleteFolder);
-folderRouter.patch("/:folderId", patchFolder);
+folderRouter.patch("/:folderId/rename", patchFolder);
 
 module.exports = folderRouter;
