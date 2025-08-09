@@ -4,6 +4,7 @@ const { body, validationResult } = require("express-validator");
 const alphaNumericSpaces = /^[a-zA-Z0-9 ]+$/;
 const fs = require("fs");
 const path = require("node:path");
+const { cursorTo } = require("node:readline");
 
 const validateFolder = [
     body("folderName")
@@ -42,15 +43,21 @@ const postFolder = [
     asyncHandler(async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.send("Some errors occured validating post folder");
-
+            return res.status(400).json({
+                user: req.user, 
+                currentFolder: req.currentFolder, 
+                folders: req.folders, 
+                files: req.files,
+                errors: errors.array()
+            });
         }
         const { folderName } = req.body; // from folder form
         const userId = req.user?.id;
 
         if (!userId) {
-            return res.status(401).send("Unauthorized: User not logged in.");
-            //return res.status(401).render(some kind of view);
+            return res.status(401).json({ 
+                errors: errors.array()
+            })
         };
 
         const newFolder = await prisma.folder.create({
@@ -68,7 +75,11 @@ const deleteFolder = asyncHandler(async (req, res) => {
     const userId = req.user?.id;
 
     if (isNaN(folderId)) {
-        return res.send("folderId must be a number");
+        // ISSUE: This would not render since the frontend is expecting json
+        return res.status(400).render("errorPage", {
+            status: 400,
+            message: "Invalid Folder id: Sorry, something went wrong with attempting to delete the folder."
+        })
     }
 
     // Escape the deletion process to avoid deleting the default folder
@@ -93,6 +104,7 @@ const deleteFolder = asyncHandler(async (req, res) => {
                 fs.unlinkSync(filePath);
             }
         } catch (err) {
+            // ISSUE: Better error handling needed
             console.error(`Failed to delete file at ${filePath}:`, err);
         }
     })
@@ -123,8 +135,9 @@ const patchFolder = [
     asyncHandler(async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.send("Some errors occured validating patch folder");
-            //return res.status(400).render(create folder view, {errors: errors.array(), data: req.body});
+            return res.status(400).json({
+                errors: errors.array(),
+            })
         }
 
         const folderId = parseInt(req.params.folderId);
@@ -138,8 +151,10 @@ const patchFolder = [
             },
         });
         if (!folder || folder.userId !== userId) {
-            return res.status(403).send("Forbidden: You do not own this folder");
-            //return res.status(403).render();
+            return res.status(403).render("errorPage", {
+                status: 403,
+                message: "Forbidden: You do not own this folder."
+            })
         }
 
         // Escapes renaming logic to prevent renaming default folder

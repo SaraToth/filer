@@ -41,6 +41,7 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <form action="/folders" method="post" class="modal-form">
+                        <%- include("./errors")%>
             <label for="folderName">Folder Name:</label>
             <input type="text" id="folderName" name="folderName">
             <button type="submit">Create</button>
@@ -53,6 +54,7 @@
     <div class="modal-content">
         <span class="rename-close">&times;</span>
         <form action="" class="rename-modal-form">
+            <%- include("./errors")%>
             <label for="renameFolder">Folder Name:</label>
             <input type="text" id="renameFolder" name="renameFolder">
             <input type="hidden" id="oldFolderId" name="oldFolderId">

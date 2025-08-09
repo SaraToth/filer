@@ -170,29 +170,46 @@ const deleteFolder = (folderId) => {
 };
 
 
-const patchFolder = (folderId, newFolderName) => {
-    
-    fetch(`/folders/${folderId}/rename`, {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ newFolderName: newFolderName}),
-    })
-    .then((res) => {
-        if (res.ok) {
-            location.reload();
+const patchFolder = async (folderId, newFolderName) => {
 
-            // Close the modal
+    try {
+        const res = await fetch(`/folders/${folderId}/rename`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ newFolderName: newFolderName}),
+        });
+
+        if (res.ok) {
             renameModal.style.display = "none";
+            location.reload();
+        } else if (res.status === 400) {
+            const data = await res.json();
+
+            const oldErrors = renameModal.querySelector(".errors");
+            if (oldErrors) oldErrors.remove();
+
+            if (data.errors && data.errors.length) {
+                const ul = document.createElement("ul");
+                ul.classList.add("errors");
+                data.errors.forEach((error) => {
+                    const li = document.createElement("li");
+                    li.classList.add("error-msg");
+                    li.textContent = error.msg;
+                    ul.appendChild(li);
+                });
+
+                const form = renameModal.querySelector("form");
+                form.prepend(ul);
+            }
         } else {
-            alert(`${folderId}`);
+            alert("Unexpected error occured.");
         }
-    })
-    .catch((err) => {
+    } catch (err) {
         console.error("Error:", err);
-    });
-}
+    }
+};
 
 window.addEventListener("click", (event) => { 
 

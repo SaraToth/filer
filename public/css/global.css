@@ -6,3 +6,7 @@ body {
 .errors {
     color: white;
 }
+
+.error-msg {
+    color: black;
+}
