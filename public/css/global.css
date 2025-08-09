@@ -9,4 +9,13 @@ body {
 
 .error-msg {
     color: black;
+    list-style: none;
+    text-align: left;
+}
+
+.error-span li{
+    color: black;
+    list-style: none;
+    text-align: left;
+    padding: 3px 0;
 }
