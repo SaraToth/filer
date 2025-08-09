@@ -13,11 +13,12 @@
     <ul>
         <% if (locals.folders) {%>
             <% folders.forEach((folder) => {%>
-                <li class="folder-item" data-folderid=<%= folder.id%>>
+                <li class="folder-item" data-foldername=<%=folder.folderName%> data-folderid=<%= folder.id%>>
                     <a href="/dashboard/<%= folder.id %>" data-folderid=<%=folder.id%> class="folder-link <%= currentFolder && currentFolder.id === folder.id ? 'active-folder' : '' %>">
                         <%= folder.folderName %>
                     </a>
                     <div class="folder-context-menu hidden">
+                        <button class="rename-folder-btn" data-folderid=<%=folder.id%> data-foldername=<%=folder.folderName%>>Rename</button>
                         <button class="delete-folder-btn">Delete</button>
                     </div>
                 </li>
@@ -38,6 +39,19 @@
         </form>
     </div>
 </div>
+
+<!-- Hidden Modal for Renaming folder -->
+ <div id="rename-folder-modal" class="modal">
+    <div class="modal-content">
+        <span class="rename-close">&times;</span>
+        <form action="" class="rename-modal-form">
+            <label for="renameFolder">Folder Name:</label>
+            <input type="text" id="renameFolder" name="renameFolder">
+            <input type="hidden" id="oldFolderId" name="oldFolderId">
+            <button type="button" id="rename-submit-btn">Rename</button>
+        </form>
+    </div>
+ </div>
 
 <!-- Hidden File Input -->
 <form id="fileUploadForm" action="/files/upload-file" method="post" enctype="multipart/form-data" style="display: none;">
