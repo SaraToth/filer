@@ -141,6 +141,11 @@ const patchFolder = [
             return res.status(403).send("Forbidden: You do not own this folder");
             //return res.status(403).render();
         }
+
+        // Escapes renaming logic to prevent renaming default folder
+        if (req.defaultFolder) {
+            return res.status(200).json({ success: true })
+        }
         await prisma.folder.update({
             where: {
                 id: folderId,
