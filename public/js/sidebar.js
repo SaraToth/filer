@@ -137,6 +137,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     })
 
+    document.getElementById("new-folder-submit-btn").addEventListener("click", async (e) => {
+        e.preventDefault();
+        const folderInput = document.getElementById("folderName");
+        const folderName = folderInput.value;
+        postFolder(folderName);
+
+        folderInput.value = "";
+    })
+
 });
 
 
@@ -169,7 +178,7 @@ const deleteFolder = (folderId) => {
     });
 };
 
-
+// Patch request to server to rename folder
 const patchFolder = async (folderId, newFolderName) => {
 
     try {
@@ -205,6 +214,45 @@ const patchFolder = async (folderId, newFolderName) => {
             }
         } else {
             alert("Unexpected error occured.");
+        }
+    } catch (err) {
+        console.error("Error:", err);
+    }
+};
+
+// Manual post request to server to create a new folder
+const postFolder = async (folderName) => {
+    try {
+        const res = await fetch(`/folders`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ folderName: folderName}),
+        });
+
+        if (res.ok) {
+            modal.style.display = "none";
+            location.reload();
+        } else if (res.status === 400) {
+            const data = await res.json();
+
+            const oldErrors = modal.querySelector(".errors");
+            if (oldErrors) oldErrors.remove();
+
+            if (data.errors && data.errors.length) {
+                const ul = document.createElement("ul");
+                ul.classList.add("errors");
+                data.errors.forEach((error) => {
+                    const li = document.createElement("li");
+                    li.classList.add("error-msg");
+                    li.textContent = error.msg;
+                    ul.appendChild(li);
+                });
+
+                const form = modal.querySelector("form");
+                form.prepend(ul);
+            }
         }
     } catch (err) {
         console.error("Error:", err);
