@@ -67,6 +67,7 @@ const uploadFile = async (req, res) => {
     try {
         const file = req.file;
 
+        // Add the file to current folder
         await prisma.file.create({
             data: {
                 fileName: file.originalname,
@@ -76,7 +77,35 @@ const uploadFile = async (req, res) => {
             }
         });
 
-        res.redirect(`/dashboard/${req.body.folderId}`);
+        // Get the current folder information from database
+        const currentFolder = await prisma.folder.findFirst({
+            where: {
+                id: parseInt(req.body.folderId),
+                userId: req.user.id,
+            }
+        });
+
+        // If current folder is not "My Files" add the file to the My Files folder too
+        if (currentFolder.folderName === "My Files") {
+            return res.redirect(`/dashboard/${req.body.folderId}`);
+        } else {
+            const myFiles = await prisma.folder.findFirst({
+                where: {
+                    userId: req.user.id,
+                    folderName: "My Files",
+                }
+            });
+
+            await prisma.file.create({
+                data: {
+                    fileName: file.originalname,
+                    link: file.path,
+                    userId: req.user.id,
+                    folderId: myFiles.id,
+                }
+            })
+        }
+        return res.redirect(`/dashboard/${req.body.folderId}`);
     } catch (err) {
         console.error("Upload error:", err);
         res.status(500).send("Upload failed");
