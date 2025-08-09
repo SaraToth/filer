@@ -13,15 +13,23 @@
     <ul>
         <% if (locals.folders) {%>
             <% folders.forEach((folder) => {%>
-                <li class="folder-item" data-foldername=<%=folder.folderName%> data-folderid=<%= folder.id%>>
-                    <a href="/dashboard/<%= folder.id %>" data-folderid=<%=folder.id%> class="folder-link <%= currentFolder && currentFolder.id === folder.id ? 'active-folder' : '' %>">
-                        <%= folder.folderName %>
-                    </a>
-                    <div class="folder-context-menu hidden">
-                        <button class="rename-folder-btn" data-folderid=<%=folder.id%> data-foldername=<%=folder.folderName%>>Rename</button>
-                        <button class="delete-folder-btn">Delete</button>
-                    </div>
-                </li>
+                <% if (folder.folderName !== "My Files") {%>
+                    <li class="folder-item" data-foldername=<%=folder.folderName%> data-folderid=<%= folder.id%>>
+                        <a href="/dashboard/<%= folder.id %>" data-folderid=<%=folder.id%> class="folder-link <%= currentFolder && currentFolder.id === folder.id ? 'active-folder' : '' %>">
+                            <%= folder.folderName %>
+                        </a>
+                        <div class="folder-context-menu hidden">
+                            <button class="rename-folder-btn" data-folderid=<%=folder.id%> data-foldername=<%=folder.folderName%>>Rename</button>
+                            <button class="delete-folder-btn">Delete</button>
+                        </div>
+                    </li>
+                <%} else {%>
+                    <li class="folder-item" data-foldername=<%=folder.folderName%> data-folderid=<%= folder.id%>>
+                        <a href="/dashboard/<%= folder.id %>" data-folderid=<%=folder.id%> class="folder-link <%= currentFolder && currentFolder.id === folder.id ? 'active-folder' : '' %>">
+                            <%= folder.folderName %>
+                        </a>
+                    </li>
+                    <% } %>
             <%})%>
         <%}%>
     </ul>

@@ -69,9 +69,7 @@ const deleteFolder = asyncHandler(async (req, res) => {
 
     if (isNaN(folderId)) {
         return res.send("folderId must be a number");
-        //return res.status(400).render(some view that displays the error?)
     }
-
     // Delete all files in that folder locally
 
     // Access the files
